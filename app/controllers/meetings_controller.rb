@@ -3,6 +3,7 @@ class MeetingsController < ApplicationController
 
         def create
             @meeting = Meeting.new(meeting_params)
+            @meeting.user = User.first
 
 
             if @meeting.save
@@ -13,9 +14,9 @@ class MeetingsController < ApplicationController
         end
 
         def index
-            @agencies = meeting.all
+            @meetings = Meeting.all
         
-            render json: @agencies
+            render json: @meetings
         end
 
         def show
@@ -39,13 +40,13 @@ class MeetingsController < ApplicationController
         private
 
             def meeting_params
-                params.require(:meeting).permit(:Title,:Description,:Start,:End)
+                params.require(:meeting).permit(:Title,:Description,:Start,:End,:id)
             end
 
             def set_meeting
-                @meeting = meeting.find(params[:Title])
+                @meeting = Meeting.find(params[:id])
             end
         
-    end
+    
     
 end
