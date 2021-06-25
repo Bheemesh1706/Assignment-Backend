@@ -23,8 +23,12 @@ class MeetingsController < ApplicationController
             render json: @meeting
         end
 
-        def delete
-            destory @meeting
+        def destroy
+            if @meeting.destroy
+                render json: {success_message: "Meeting Deleted"}, status: 200
+            else
+                render json: @meeting.errors.full_messages, status: 420
+            end
         end
 
         def update
